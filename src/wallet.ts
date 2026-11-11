@@ -16,8 +16,6 @@ export type WalletConnection = {
 
 export type Eip1193Provider = {
   request(args: { method: string; params?: unknown[] }): Promise<unknown>
-  on?(event: string, listener: (...args: unknown[]) => void): void
-  removeListener?(event: string, listener: (...args: unknown[]) => void): void
 }
 
 export async function connectMetaMask(): Promise<WalletConnection> {
@@ -74,7 +72,7 @@ export async function connectWalletConnect(): Promise<WalletConnection> {
 export async function getWalletDetails(
   provider: Eip1193Provider,
   address: string,
-  wallet: WalletName,
+  wallet: WalletConnection['wallet'],
 ): Promise<WalletConnection> {
   const browserProvider = new BrowserProvider(provider as never)
   const network = await browserProvider.getNetwork()
