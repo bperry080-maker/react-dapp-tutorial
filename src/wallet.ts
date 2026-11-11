@@ -5,17 +5,19 @@ import { BrowserProvider, formatEther } from 'ethers'
 const PROJECT_ID = import.meta.env.VITE_WALLETCONNECT_PROJECT_ID
 const CHAINS = [1, 56]
 
-type WalletName = 'MetaMask' | 'WalletConnect'
+export type WalletName = 'MetaMask' | 'WalletConnect'
 
-type WalletConnection = {
+export type WalletConnection = {
   address: string
   chainId: number
   balance: string
   wallet: WalletName
 }
 
-type Eip1193Provider = {
+export type Eip1193Provider = {
   request(args: { method: string; params?: unknown[] }): Promise<unknown>
+  on?(event: string, listener: (...args: unknown[]) => void): void
+  removeListener?(event: string, listener: (...args: unknown[]) => void): void
 }
 
 export async function connectMetaMask(): Promise<WalletConnection> {
@@ -69,7 +71,7 @@ export async function connectWalletConnect(): Promise<WalletConnection> {
   return getWalletDetails(provider, accounts[0], 'WalletConnect')
 }
 
-async function getWalletDetails(
+export async function getWalletDetails(
   provider: Eip1193Provider,
   address: string,
   wallet: WalletName,
