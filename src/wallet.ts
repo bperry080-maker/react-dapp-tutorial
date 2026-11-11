@@ -16,6 +16,9 @@ export type WalletConnection = {
 
 export type Eip1193Provider = {
   request(args: { method: string; params?: unknown[] }): Promise<unknown>
+  on?(event: string, listener: (...args: any[]) => void): void
+  removeListener?(event: string, listener: (...args: any[]) => void): void
+  isMetaMask?: boolean
 }
 
 export async function connectMetaMask(): Promise<WalletConnection> {

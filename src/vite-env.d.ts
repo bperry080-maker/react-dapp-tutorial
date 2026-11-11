@@ -1,18 +1,18 @@
 /// <reference types="vite/client" />
 
-interface ImportMetaEnv {
-  readonly VITE_WALLETCONNECT_PROJECT_ID: string
-}
+import type { Eip1193Provider } from './wallet'
 
-interface ImportMeta {
-  readonly env: ImportMetaEnv
-}
-
-interface Window {
-  ethereum?: {
-    isMetaMask?: boolean
-    request(args: { method: string; params?: unknown[] }): Promise<unknown>
-    on?(event: string, listener: (...args: unknown[]) => void): void
-    removeListener?(event: string, listener: (...args: unknown[]) => void): void
+declare global {
+  interface Window {
+    ethereum?: Eip1193Provider & {
+      isMetaMask?: boolean
+      on?: (event: string, callback: (...args: any[]) => void) => void
+      removeListener?: (
+        event: string,
+        callback: (...args: any[]) => void
+      ) => void
+    }
   }
 }
+
+export {}
